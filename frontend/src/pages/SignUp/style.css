@@ -1,0 +1,49 @@
+.signup {
+  background-color: #30a4e3;
+  height: 100vh;
+}
+
+.signup h2 {
+  padding-top: 1.5rem;
+}
+
+.signup a {
+  color: #333;
+}
+.signup a:hover {
+  color: #30a4e3;
+  text-decoration: none;
+}
+.signup .card {
+  border-radius: 40px;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.signup .form-control {
+  background-color: #f8f9fa;
+  padding: 15px;
+  padding: 15px 5px;
+  margin-bottom: 1.3rem;
+}
+
+.signup .form-control:focus {
+  color: #000000;
+  background-color: #ffffff;
+  border: 3px solid #30a4e3;
+  outline: 0;
+  box-shadow: none;
+}
+
+.signup .btn {
+  padding: 0.6rem 1.2rem;
+  background: #30a4e3;
+  border: 2px solid #30a4e3;
+  border-radius: 40px;
+}
+.signup .btn:hover {
+  background-color: #30a4e3;
+  border-color: #30a4e3;
+  transition: 0.3s;
+}

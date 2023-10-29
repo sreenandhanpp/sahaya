@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700;300&display=swap");
+:root {
+  --font-family--: "Lato", sans-serif;
+  --head-font-weight--: 700;
+  --text-font-weight--: 300;
+  --primary-color--: #30a4e3;
+}
+
+* {
+  font-family: var(--font-family--);
+  font-weight: var(--text-font-weight--);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--head-font-weight--);
+}

@@ -1,0 +1,8 @@
+.donate-now .view-all{
+    border-radius: 10px;
+    width: 70px;
+    background-color: var(--primary-color--);
+}
+.donate-now i{
+    font-weight: bolder;
+}
