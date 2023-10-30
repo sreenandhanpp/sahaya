@@ -7,7 +7,8 @@ const loginValidator = require("../middlewares/loginValidator");
 const userHelper = require("../helpers/userHelper");
 const checkMail = require("../middlewares/checkMail");
 const {
-  resendPhoneOtp, resendEmailOtp,
+  resendPhoneOtp,
+  resendEmailOtp,
 } = require("../helpers/userHelper/resendOtp");
 
 // Route for handling user signup
@@ -16,7 +17,7 @@ router.post("/signup", checkMail, async (req, res) => {
     let err = validationResult(req);
     if (!err.isEmpty()) {
       // If there are validation errors, respond with a status code 400 and error messages
-      res.status(400).json({ message:"Email already exist" });
+      res.status(400).json({ message: "Email already exist" });
     } else {
       // Call the doSignup function from userHelper to create a new user
       userHelper
@@ -69,7 +70,7 @@ router.post("/verify-email-otp", (req, res) => {
         res.status(200).json({ message: resp });
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         // Handle errors by responding with an unauthorized status and an error message
         res.status(401).json({ message: err });
       });
@@ -103,7 +104,7 @@ router.post("/login", (req, res) => {
         res.status(200).json(resp);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         // Handle login failures by responding with an unauthorized status and an error message
         res.status(401).json({ message: err });
       });
@@ -111,6 +112,17 @@ router.post("/login", (req, res) => {
     // Handle unexpected errors and respond with a generic error message
     res.status(500).json({ message: "An unexpected error occurred." });
   }
+});
+
+router.get("/campaigns", (req, res) => {
+  userHelper
+    .getAllCampaign()
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(400).json({ message: err });
+    });
 });
 
 router.get("/logout", (req, res) => {

@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 const generateOtp = require("../../utils/generateOtp.js");
 const Otp = require("../../MongoDb/models/userModels/mailOtp.js");
 const mongoose = require("mongoose");
+const Campaign = require("../../MongoDb/models/adminModels/campaign.js");
 const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
@@ -29,7 +30,7 @@ module.exports = {
           .then((data) => {
             // Return user data after successful account creation
             const userData = {
-              _id:data._id,
+              _id: data._id,
               fullname: data.fullname,
               email: data.email,
               admin: data.admin,
@@ -163,8 +164,24 @@ module.exports = {
           }
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         reject("Something went wrong on verifying OTP,try again");
+      }
+    });
+  },
+  getAllCampaign: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        Campaign.find()
+          .then((campaigns) => {
+            resolve(campaigns);
+          })
+          .catch((err) => {
+            reject("Something went wrong on fetching campaigns");
+          });
+      } catch (error) {
+        console.log(error)
+        reject("Something went wrong on fetching campaigns");
       }
     });
   },
