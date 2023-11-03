@@ -1,0 +1,22 @@
+.create-btn {
+  border-radius: 10px;
+  width: 70px;
+  background-color: var(--secondary-color--) !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Light background color with reduced opacity */
+  z-index: 1050; /* Ensure it's above the modal (usually 1040) */
+  display: none; /* Initially hidden */
+  backdrop-filter: blur(4px); /* Add a glass blur effect */
+}

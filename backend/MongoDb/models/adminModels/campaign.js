@@ -13,6 +13,7 @@ const Schema = new mongoose.Schema({
   ifsc: {
     type: String,
     required: true,
+    unique: true
   },
   disease: {
     type: String,

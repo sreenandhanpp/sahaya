@@ -15,7 +15,7 @@ module.exports = {
           ifsc: patient.ifsc,
           disease: patient.disease,
           amount: patient.amount,
-          deadLine: patient.deadLine,
+          deadLine: patient.date,
           img: file.filename,
         });
         campaign
@@ -24,6 +24,7 @@ module.exports = {
             resolve("Campaign created successfully");
           })
           .catch((err) => {
+            console.log(err);
             reject("Something went wrong on creating campaign");
           });
       } catch (error) {
@@ -32,16 +33,26 @@ module.exports = {
       }
     });
   },
-  updateCampaign: (patient, file) => {
+  updateCampaign: (data, file) => {
     return new Promise(async (resolve, reject) => {
       try {
+        let campaign = {
+          id: data.id,
+          fullname: data.fullname,
+          address: data.address,
+          account_no: data.account_no,
+          ifsc: data.ifsc,
+          disease: data.disease,
+          amount: data.amount,
+          deadLine: data.date,
+        };
         if (file) {
-          patient.img = file.filename;
+          campaign.img = file.filename;
         }
         Campaign.updateOne(
-          { _id: new ObjectId(patient.userId) },
+          { _id: new ObjectId(campaign.id) },
           {
-            $set: patient,
+            $set: campaign,
           }
         )
           .then((res) => {
@@ -64,7 +75,7 @@ module.exports = {
             resolve("Campaign deleted successfully");
           })
           .catch((err) => {
-            reject("Something went wrong on deleting campaign")
+            reject("Something went wrong on deleting campaign");
           });
       } catch (error) {}
     });

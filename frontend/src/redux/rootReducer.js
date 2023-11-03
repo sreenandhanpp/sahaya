@@ -3,31 +3,30 @@ import { userReducer } from "./reducers/signupReducer";
 import { verifyReducer } from "./reducers/verifyOtp";
 import { resendOtp } from "./reducers/resendOtp";
 import { sendReducer } from "./reducers/sendReducer";
-import { updateReducer } from "./reducers/updateReducer";
+import { updateCampaignReducer } from "./reducers/updateCampaignReducer";
 import { loginReducer } from "./reducers/loginReducer";
-import { jobsReducer } from "./reducers/jobsReducer";
-import { jobReducer } from "./reducers/jobReducer";
-import { deleteJobReducer } from "./reducers/deleteJobReducer";
-import { createJobReducer } from "./reducers/createJobReducer";
+import { allCampaigns } from "./reducers/allCampaigns";
+import { campaign } from "./reducers/campaign";
+import { deleteCampaignReducer } from "./reducers/deleteCampaignReducer";
+import { createCampaignReducer } from "./reducers/createCampaignReducer";
 import { applicationsReducer } from "./reducers/applicationsReducer";
 import { userFetchJobReducer } from "./reducers/userFetchJobReducer";
 import { getUserDetailsReducer } from "./reducers/getUserDetailsReducer";
 import { downloadReducer } from "./reducers/downloadReducer";
-
 
 export const rootReducers = combineReducers({
   userData: userReducer,
   verify: verifyReducer,
   resendOtp: resendOtp,
   sendOtp: sendReducer,
-  updatedData: updateReducer,
+  updatedData: updateCampaignReducer,
   login: loginReducer,
-  jobs: jobsReducer,
-  job: jobReducer,
-  deleteJob: deleteJobReducer,
-  createJob: createJobReducer,  
+  allCampaigns: allCampaigns,
+  campaign: campaign,
+  deleteCampaign: deleteCampaignReducer,
+  createCampaign: createCampaignReducer,
   applications: applicationsReducer,
   userJobDetails: userFetchJobReducer,
-  getUserDetails : getUserDetailsReducer,
-  download:downloadReducer
+  getUserDetails: getUserDetailsReducer,
+  download: downloadReducer,
 });

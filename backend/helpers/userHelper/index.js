@@ -180,8 +180,23 @@ module.exports = {
             reject("Something went wrong on fetching campaigns");
           });
       } catch (error) {
-        console.log(error)
+        console.log(error);
         reject("Something went wrong on fetching campaigns");
+      }
+    });
+  },
+  getCampagin: ({ id }) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        Campaign.findOne({ _id: new ObjectId(id)})
+          .then((campaign) => {
+            resolve(campaign);
+          })
+          .catch((err) => {
+            reject("Something went wrong on fetching campaign");
+          });
+      } catch (error) {
+        reject("Something went wrong on fetching campaign");
       }
     });
   },

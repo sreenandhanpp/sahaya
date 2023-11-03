@@ -1,7 +1,7 @@
 import React from 'react'
 import Alert from '../Alert/Alert'
 
-const Input = ({ type,id,placeholder,label,errors,name,HandleChange,value}) => {
+const   Input = ({ type,id,placeholder,label,errors,name,HandleChange,value}) => {
     return (
         <div className="form-group">
             <input
@@ -13,7 +13,7 @@ const Input = ({ type,id,placeholder,label,errors,name,HandleChange,value}) => {
                 onChange={(e)=>HandleChange(e,name)}
                 value={value}
             />
-            <Alert errors={errors} label={label}/>
+            <Alert errors={errors} label={name}/>
         </div>
     )
 }

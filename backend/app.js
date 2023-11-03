@@ -6,8 +6,8 @@ const adminRouter = require('./routes/adminRoute.js');
 const bodyParser = require('body-parser');
 const connectDB = require('./MongoDb/connect.js');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const session = require('express-session')
+const session = require('express-session');
+
 //configure the dotenv library
 dotenv.config();
 
@@ -17,6 +17,7 @@ const MONGODB_URL = process.env.MONGODB_URL;
 
 //creating the server from express library
 const app = express();
+
 
 //encoding the url to make the data passed through it to a object 
 app.use(cors());
@@ -28,6 +29,8 @@ app.use(session({
     cookie: { maxAge: 6000000 },
     resave: false 
 }));
+
+app.use(express.static('uploads'));
 
 //seperates routes for normal user and admin(we call normal user as user )
 app.use('/admin/api', adminRouter);

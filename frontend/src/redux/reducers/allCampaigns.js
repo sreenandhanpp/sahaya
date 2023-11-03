@@ -1,19 +1,18 @@
 import { USER } from "../constants/user"
-import {setItem} from "../../../localStorage/setItem"
 
 let initialState = {
     loading:false,
     error:"",
-    data:{}
+    data:[]
 }
 
-export const updateReducer = (state = initialState,action) => {
+export const allCampaigns = (state = initialState,action) => {
     switch(action.type){
-        case USER.UPDATE_USER_REQUEST:
+        case USER.FETCH_CAMPAIGNS_REQUEST:
             return { ...state, loading:true}
-        case USER.UPDATE_USER_SUCCESS:
+        case USER.FETCH_CAMPAIGNS_SUCCESS:
             return { ...state,loading: false,data: action.payload }
-        case USER.UPDATE_USER_FAILED:
+        case USER.FETCH_CAMPAIGNS_SUCCESS:
             return { ...state,loading: false,error: action.payload }
         default:
             return state

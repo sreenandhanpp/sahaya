@@ -21,7 +21,6 @@ const DonateNow = () => {
                     <Campaigns />
                     <Campaigns />
                     <Campaigns />
-
                 </div>
             </div>
         </section>

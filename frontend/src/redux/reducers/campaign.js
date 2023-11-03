@@ -1,6 +1,5 @@
 import { USER } from "../constants/user"
 import {setItem} from "../../../localStorage/setItem"
-import { ADMIN } from "../constants/admin"
 
 let initialState = {
     loading:false,
@@ -8,13 +7,13 @@ let initialState = {
     data:[]
 }
 
-export const jobReducer = (state = initialState,action) => {
+export const campaign = (state = initialState,action) => {
     switch(action.type){
-        case ADMIN.FETCH_JOB_REQUEST:
+        case USER.FETCH_CAMPAIGN_REQUEST:
             return { ...state, loading:true}
-        case ADMIN.FETCH_JOB_SUCCESS:
+        case USER.FETCH_CAMPAIGN_SUCCESS:
             return { ...state,loading: false,data: action.payload }
-        case ADMIN.FETCH_JOB_FAILED:
+        case USER.FETCH_CAMPAIGN_FAILED:
             return { ...state,loading: false,error: action.payload }
         default:
             return state

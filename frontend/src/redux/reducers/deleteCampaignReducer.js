@@ -7,13 +7,13 @@ let initialState = {
     message:""
 }
 
-export const deleteJobReducer = (state = initialState,action) => {
+export const deleteCampaignReducer = (state = initialState,action) => {
     switch(action.type){
-        case ADMIN.DELETE_JOB_REQUEST:
+        case ADMIN.DELETE_CAMPAIGN_REQUEST:
             return { ...state, loading:true}
-        case ADMIN.DELETE_JOB_SUCCESS:
+        case ADMIN.CREATE_CAMPAIGN_SUCCESS:
             return { ...state,loading: false,message: action.payload }
-        case ADMIN.DELETE_JOB_FAILED:
+        case ADMIN.DELETE_CAMPAIGN_FAILED:
             return { ...state,loading: false,error: action.payload }
         default:
             return state

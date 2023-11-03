@@ -1,0 +1,6 @@
+.update-campaign {
+  background-color: var(--primary-color--);
+  height: 200vh !important;
+  display: flex;
+  align-items: center;
+}
