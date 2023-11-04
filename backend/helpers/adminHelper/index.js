@@ -5,9 +5,11 @@ const bcrypt = require("bcrypt");
 const Campaign = require("../../MongoDb/models/adminModels/campaign");
 
 module.exports = {
+  // Function to create a new campaign in the database
   createCampaign: (patient, file) => {
     return new Promise(async (resolve, reject) => {
       try {
+        // Create a new Campaign object with the provided patient data and file information
         const campaign = new Campaign({
           fullname: patient.fullname,
           address: patient.address,
@@ -18,6 +20,8 @@ module.exports = {
           deadLine: patient.date,
           img: file.filename,
         });
+
+        // Save the campaign to the database
         campaign
           .save(campaign)
           .then((res) => {
@@ -33,9 +37,12 @@ module.exports = {
       }
     });
   },
+
+  // Function to update an existing campaign in the database
   updateCampaign: (data, file) => {
     return new Promise(async (resolve, reject) => {
       try {
+        // Create a campaign object with updated data
         let campaign = {
           id: data.id,
           fullname: data.fullname,
@@ -46,9 +53,13 @@ module.exports = {
           amount: data.amount,
           deadLine: data.date,
         };
+
+        // If a new file is provided, update the 'img' property
         if (file) {
           campaign.img = file.filename;
         }
+
+        // Update the campaign in the database
         Campaign.updateOne(
           { _id: new ObjectId(campaign.id) },
           {
@@ -67,9 +78,12 @@ module.exports = {
       }
     });
   },
+
+  // Function to delete a campaign from the database
   deleteCampaign: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {
+        // Delete a campaign based on the provided user ID
         Campaign.deleteOne({ _id: new ObjectId(userId) })
           .then((resp) => {
             resolve("Campaign deleted successfully");
@@ -77,7 +91,9 @@ module.exports = {
           .catch((err) => {
             reject("Something went wrong on deleting campaign");
           });
-      } catch (error) {}
+      } catch (error) {
+        // Handle potential errors (empty catch block)
+      }
     });
   },
 };

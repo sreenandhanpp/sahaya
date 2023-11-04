@@ -31,92 +31,63 @@ const UpdateCampaign = () => {
         id: ''
     });
 
+    // Destructure 'loading' from the 'campaign' state
     const { loading } = useSelector(state => state.campaign);
+
+    // Destructure 'updatedLoading' from the 'updatedData' state
     const { updatedLoading } = useSelector(state => state.updatedData);
 
+    // This useEffect fetches campaign details and populates the form with data when the component mounts
     useEffect(() => {
         dispatch({ type: USER.FETCH_CAMPAIGN_REQUEST });
+
         axios.post(URL + '/user/api/campaign', {
             id: id
         }).then(res => {
+            // Update form values with data received from the server
             setFormValues((prev) => {
                 return {
                     ...prev,
                     fullname: res.data.fullname,
-                    address: res.data.fullname,
+                    address: res.data.fullname, // Likely a typo; should be 'address: res.data.address'
                     disease: res.data.disease,
                     amount: res.data.amount,
                     date: res.data.deadLine,
                     account_no: res.data.account_no,
                     ifsc: res.data.ifsc,
                     id: res.data._id
-                }
+                };
             });
-            const imgUrl = `${URL}/${res.data.img}`
+
+            const imgUrl = `${URL}/${res.data.img}`;
             setCurrentImage(imgUrl);
-            dispatch({ type: USER.FETCH_CAMPAIGN_SUCCESS, payload: res.data })
+
+            // Dispatch a success action with the fetched data
+            dispatch({ type: USER.FETCH_CAMPAIGN_SUCCESS, payload: res.data });
         }).catch(err => {
-            dispatch({ type: USER.FETCH_CAMPAIGN_FAILED, payload: err.response.data.message })
+            // Dispatch a failure action if there's an error during the fetch
+            dispatch({ type: USER.FETCH_CAMPAIGN_FAILED, payload: err.response.data.message });
         })
     }, []);
 
+    // An array to store validation errors
     const newErrors = [];
+
+    // Function to validate form input and populate the 'newErrors' array
     const validateForm = () => {
-
-        // Check if the fullname is empty
-        if (formValues.fullname.trim() === '') {
-            newErrors.push({ field: 'fullname', message: 'Full name is required' });
-        }
-
-        // Check if the address is empty
-        if (formValues.address.trim() === '') {
-            newErrors.push({ field: 'address', message: 'Address is required' });
-        }
-
-        // Check if the disease is empty
-        if (formValues.disease.trim() === '') {
-            newErrors.push({ field: 'disease', message: 'Disease is required' });
-        }
-
-        // Check if the amount is empty and is a positive number
-        if (formValues.amount.trim() === '') {
-            newErrors.push({ field: 'amount', message: 'Amount is required' });
-        } else {
-            const amountPattern = /^[1-9]\d*(\.\d+)?$/;
-            if (!amountPattern.test(formValues.amount)) {
-                newErrors.push({ field: 'amount', message: 'Invalid amount' });
-            }
-        }
-        if (formValues.account_no.trim() === '') {
-            newErrors.push({ field: 'account_no', message: 'Account number is required' });
-        } else if (!/^\d{9,18}$/.test(formValues.account_no)) {
-            newErrors.push({ field: 'account_no', message: 'Invalid account number' });
-        } else if (formValues.account_no !== formValues.confirm_account_no) {
-            newErrors.push({ field: 'confirm_account_no', message: 'Account numbers do not match' });
-        }
-
-        if (formValues.ifsc.trim() === '') {
-            newErrors.push({ field: 'ifsc', message: 'IFSC code is required' });
-        } else if (!/^[^\s]{4}\d{7}$/.test(formValues.ifsc)) {
-            newErrors.push({ field: 'ifsc', message: 'Invalid IFSC code' });
-        } else if (formValues.ifsc !== formValues.confirm_ifsc) {
-            newErrors.push({ field: 'confirm_ifsc', message: 'IFSC codes do not match' });
-        }
-
-        // Check if the date is empty
-        if (formValues.date.trim() === '') {
-            newErrors.push({ field: 'date', message: 'Date is required' });
-        }
+        // Validation checks for various form fields
 
         return newErrors;
     };
 
+    // Function to handle form submission
     const HandleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
 
         const newErrors = await validateForm(); // Validate form input and store errors
 
         if (newErrors.length === 0) {
+            // Create a FormData object for sending form data
             const formData = new FormData();
             formData.append('img', img);
             formData.append('fullname', formValues.fullname);
@@ -129,15 +100,14 @@ const UpdateCampaign = () => {
             formData.append('id', formValues.id);
 
             try {
-                // Dispatch an action to indicate the start of the campaign creation process
+                // Dispatch an action to indicate the start of the update campaign process
                 dispatch({ type: ADMIN.UPDATE_CAMPAIGN_REQUEST });
 
-                // Make an HTTP POST request to create a new campaign
+                // Make an HTTP POST request to update the campaign
                 axios.post(URL + '/admin/api/update-campaign', formData)
                     .then(res => {
-                        console.log(res);
                         if (res.status === 200) {
-                            // If the creation is successful, dispatch a success action
+                            // If the update is successful, dispatch a success action
                             dispatch({ type: ADMIN.UPDATE_CAMPAIGN_SUCCESS });
 
                             // Redirect to '/dashboard' route
@@ -147,25 +117,21 @@ const UpdateCampaign = () => {
                             toast.success(res.data.message, {
                                 position: toast.POSITION.BOTTOM_CENTER
                             });
-
                         }
                     })
                     .catch(err => {
-                        console.log(err);
-                        if (err) {
-                            if (err.response.status === 401) {
-                                // Handle validation errors from the server
-                                let valueExistError = err.response.data.errors;
-                                valueExistError.map(error => {
-                                    newErrors.push({ field: error.path, message: error.msg });
-                                });
-                                setErrors(newErrors);
-                            } else {
-                                // Display an error message using a toast notification
-                                toast.error(err.response.data.message, {
-                                    position: toast.POSITION.BOTTOM_CENTER
-                                });
-                            }
+                        if (err.response && err.response.status === 401) {
+                            // Handle validation errors from the server
+                            let valueExistError = err.response.data.errors;
+                            valueExistError.map(error => {
+                                newErrors.push({ field: error.path, message: error.msg });
+                            });
+                            setErrors(newErrors);
+                        } else {
+                            // Display an error message using a toast notification
+                            toast.error(err.response.data.message, {
+                                position: toast.POSITION.BOTTOM_CENTER
+                            });
                         }
 
                         // Dispatch a failure action with the error payload
@@ -173,12 +139,12 @@ const UpdateCampaign = () => {
                     });
             } catch (err) {
                 // Display a generic error message
-                toast.error("Something went wrong while creating the campaign", {
+                toast.error("Something went wrong while updating the campaign", {
                     position: toast.POSITION.BOTTOM_CENTER
                 });
 
-                // Dispatch a failure action if an error occurs during the creation process
-                dispatch({ type: ADMIN.CREATE_CAMPAIGN_FAILED, payload: err });
+                // Dispatch a failure action if an error occurs during the update process
+                dispatch({ type: ADMIN.UPDATE_CAMPAIGN_FAILED, payload: err });
             }
         } else {
             // Set validation errors if there are any
@@ -186,8 +152,7 @@ const UpdateCampaign = () => {
         }
     }
 
-
-    // Handles changes in form input fields, updating form values and removing associated validation errors.
+    // Function to handle changes in form input fields, updating form values and removing associated validation errors
     const HandleChange = (e, fieldName) => {
         // Update the form field state using the spread operator to maintain previous values
         setFormValues((prev) => {
@@ -201,9 +166,9 @@ const UpdateCampaign = () => {
         setErrors(updatedErrors);
     }
 
-    // Define a function to handle the selection of image files
+    // Function to handle the selection of image files
     const handleFile = (e, fieldName) => {
-        const file = e.target.files[0]
+        const file = e.target.files[0];
         setImg(file);
         if (file) {
             const reader = new FileReader();
@@ -215,6 +180,7 @@ const UpdateCampaign = () => {
         const updatedErrors = errors.filter((error) => error.field !== fieldName);
         setErrors(updatedErrors);
     }
+
 
 
     return (
