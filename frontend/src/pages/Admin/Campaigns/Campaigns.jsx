@@ -135,7 +135,7 @@ const Campaigns = () => {
                                 })}
                         </div>}
             </div>
-            <ConfirmDeletion ConfirmDelete={ConfirmDelete} CancelDelete={CancelDelete} showConfirmation={showConfirmation} />
+                <ConfirmDeletion ConfirmDelete={ConfirmDelete} CancelDelete={CancelDelete} showConfirmation={showConfirmation} />
 
         </section>
     );

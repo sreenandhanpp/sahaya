@@ -21,7 +21,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/update-campaign/:id" element={<UpdateCampaign />} />
           <Route exact path="/create-campaign" element={<CreateCampaign />} />
-          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/verify-email" element={<VerifyEmail />}  />

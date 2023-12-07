@@ -32,6 +32,11 @@ app.use(session({
 
 app.use(express.static('uploads'));
 
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+);
+
 //seperates routes for normal user and admin(we call normal user as user )
 app.use('/admin/api', adminRouter);
 app.use('/user/api', userRouter);
