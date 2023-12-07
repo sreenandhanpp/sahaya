@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./MongoDb/connect.js');
 const cors = require('cors');
 const session = require('express-session');
+const path = require('path');
 
 //configure the dotenv library
 dotenv.config();
