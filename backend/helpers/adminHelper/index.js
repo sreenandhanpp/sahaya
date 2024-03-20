@@ -19,6 +19,7 @@ module.exports = {
           amount: patient.amount,
           deadLine: patient.date,
           img: file.filename,
+          about: patient.about
         });
 
         // Save the campaign to the database

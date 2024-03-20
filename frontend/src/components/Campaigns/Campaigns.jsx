@@ -1,21 +1,25 @@
 import React from 'react'
 import './style.css'
-const Campaigns = () => {
+import { Link } from 'react-router-dom'
+import { URL } from '../../utils/url'
+const Campaigns = ({ key, campaign }) => {
     return (
-        <div className="col">
+    <Link to={`/campaign-details/${campaign._id}`}>
+        <div key={key} className="col">
             <div className="campaign card">
-                <img src="images/campaign1.jpg" className="card-img-top" alt="..." />
+                <img src={`${URL}/${campaign.img}`} className="card-img-top" alt="..." />
                 <div className="card-body">
-                    <h5 className="card-title"> Emily</h5>
-                    <p className="card-text"> Emily is a 6-year-old girl who has been diagnosed with Childhood Leukemia. 
-                    She's currently undergoing chemotherapy and needs financial support for her medical expenses.</p>
+                    <h5 className="card-title">{campaign.fullname} </h5>
+                    <p className="card-text">{campaign.desease}</p>
+                    <p className="card-text">{campaign.about}</p>
                 </div>
                 <div className="mb-5 d-flex justify-content-around">
-                    <h3>25,000₹</h3>
-                    <button className="btn text-white">Donate Now</button>
+                    <h3> {campaign.amount} </h3>
+                    <button >Donate Now</button>
                 </div>
             </div>
         </div>
+    </Link>
     )
 }
 

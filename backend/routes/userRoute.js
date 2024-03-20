@@ -115,9 +115,11 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/campaigns", (req, res) => {
+  console.log("hi")
   userHelper
     .getAllCampaign()
     .then((data) => {
+      console.log(data)
       res.status(200).json(data);
     })
     .catch((err) => {
@@ -129,12 +131,14 @@ router.post("/campaign", (req, res) => {
   userHelper
     .getCampagin(req.body)
     .then((data) => {
+      console.log(data)
       res.status(200).json(data);
     })
     .catch((err) => {
       res.status(400).json({ message: err });
     });
 });
+
 
 router.get("/logout", (req, res) => {
   req.session.destroy();

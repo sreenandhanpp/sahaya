@@ -174,6 +174,7 @@ module.exports = {
       try {
         Campaign.find()
           .then((campaigns) => {
+            console.log(campaigns)
             resolve(campaigns);
           })
           .catch((err) => {

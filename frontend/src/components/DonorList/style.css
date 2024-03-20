@@ -1,0 +1,68 @@
+/* Your global CSS goes here */
+
+.donor-list {
+    max-width: 600px;
+    margin: auto 0;
+    color: var(--gray--);
+  }
+  
+  .donor-names {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .donor-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 28px;
+    background-color: var(--app-black--);
+    padding: 5px;
+  }
+  
+  .donor-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--gray--); /* Placeholder color for donor profile */
+    margin-right: 15px; /* Adjusted margin */
+  }
+  
+  .donor-info {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .donor-info p {
+    margin: 0;
+  }
+  
+  .donor-name {
+    width: 150px; /* Specific width for donor name */
+    margin-right: 10px; /* Adjusted margin */
+  }
+  
+  .donor-amount {
+    width: 80px; /* Specific width for donated amount */
+    margin-right: 10px; /* Adjusted margin */
+  }
+  
+  .donor-date {
+    width: 150px; /* Specific width for donated date */
+    margin-right: 10px !important; /* Adjusted margin */
+  }
+  
+
+  .like-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: var(--gray--);
+  }
+  
+  .like-icon.liked {
+    color: var(--primary-color--); /* Change color when liked */
+  }
+  

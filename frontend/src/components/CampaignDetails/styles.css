@@ -1,0 +1,33 @@
+.campaignDetails .donate-btn {
+  border-radius: 5px;
+  border: 1px solid var(--primary-color--);
+  color: var(--primary-color--) !important;
+  background-color: var(--white);
+  transition: all 0.4s ease-in-out;
+  margin-top: 20px;
+}
+
+.campaignDetails .donate-btn:hover {
+  border-radius: 5px;
+  width: 120px;
+  background-color: var(--primary-color--) !important;
+  color: var(--white) !important;
+}
+
+.campaignDetails .other-campaign-details{
+  margin-bottom: 50px;
+}
+
+.campaignDetails .campaign_img{
+  width: 700px !important;
+  height: 300px; 
+  object-fit: cover;
+}
+
+.campaignDetails .donation_deadLine {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--secondary-color--); /* Highlighted color */
+  border-bottom: 2px solid var(--secondary-color--); /* Bottom border to make it stand out */
+  padding-bottom: 2px; /* Add some space between the text and the border */
+}

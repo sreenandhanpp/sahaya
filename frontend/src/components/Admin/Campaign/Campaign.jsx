@@ -12,6 +12,7 @@ const Campaign = ({ value, onDelete }) => {
                 <div className="card-body">
                     <h5 className="card-title"> {value.fullname} </h5>
                     <p className="card-text"> {value.disease}</p>
+                    <p className="card-text"> {value.about}</p>
                 </div>
                 <div className="mb-5 d-flex justify-content-around align-items-center">
                     <h3 className=''> {value.amount} </h3>

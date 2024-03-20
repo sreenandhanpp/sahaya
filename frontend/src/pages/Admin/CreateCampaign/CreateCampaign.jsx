@@ -23,6 +23,7 @@ const CreateCampaign = () => {
         account_no: '',
         confirm_account_no: '',
         date: '',
+        about: ''
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -102,6 +103,8 @@ const CreateCampaign = () => {
             formData.append('account_no', formValues.account_no);
             formData.append('ifsc', formValues.ifsc);
             formData.append('amount', formValues.amount);
+            formData.append('about', formValues.about);
+
 
             try {
                 // Dispatch an action to indicate the start of the campaign creation process
@@ -254,6 +257,16 @@ const CreateCampaign = () => {
                                                 onChange={(e) => HandleChange(e, 'disease')}
                                             />
                                             <Alert errors={errors} label={'disease'} />
+                                        </div>
+                                        <div className="form-group">
+                                            <textarea
+                                                className="form-control"
+                                                id="about"
+                                                placeholder="about"
+                                                name="about"
+                                                onChange={(e) => HandleChange(e, 'about')}
+                                            />
+                                            <Alert errors={errors} label={'address'} />
                                         </div>
                                         <div className="form-group">
                                             <textarea

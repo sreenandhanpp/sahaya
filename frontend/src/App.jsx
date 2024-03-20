@@ -10,6 +10,7 @@ import Home from './pages/Home/Home'
 import Dashboard from './pages/Admin/Dashboard/Dashboard'
 import CreateCampaign from './pages/Admin/CreateCampaign/CreateCampaign'
 import UpdateCampaign from './pages/Admin/UpdateCampaign/UpdateCampaign'
+import CampaignDetails from './components/CampaignDetails/CampaignDetails'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/campaign-details/:id" element={<CampaignDetails />} />
           <Route exact path="/verify-email" element={<VerifyEmail />}  />
         </Routes>
       </Provider>
