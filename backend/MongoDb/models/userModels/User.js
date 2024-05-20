@@ -16,6 +16,9 @@ const Schema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  profile:{
+    type: String,
+  },
   password: {
     type: String,
     required: true,

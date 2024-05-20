@@ -1,0 +1,17 @@
+.userDetailsUpdate .btn{
+    color: black;
+    background-color: transparent;
+    border: 1px solid var(--primary-color--);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.userDetailsUpdate .btn:hover{
+    color: var(--white);
+    background-color: var(--primary-color--);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 14px;
+}

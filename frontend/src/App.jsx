@@ -11,6 +11,7 @@ import Dashboard from './pages/Admin/Dashboard/Dashboard'
 import CreateCampaign from './pages/Admin/CreateCampaign/CreateCampaign'
 import UpdateCampaign from './pages/Admin/UpdateCampaign/UpdateCampaign'
 import CampaignDetails from './components/CampaignDetails/CampaignDetails'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
 
 function App() {
 
@@ -26,7 +27,11 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/campaign-details/:id" element={<CampaignDetails />} />
-          <Route exact path="/verify-email" element={<VerifyEmail />}  />
+          <Route exact path="/verify-email" element={<VerifyEmail />} />
+          <Route exact path="/user/profile" element={<ProfilePage />} />
+          <Route exact path="/user/history" element={<ProfilePage />} />
+          <Route exact path="/user/password" element={<ProfilePage />} />
+          <Route exact path="/user/logout" element={<ProfilePage />} />
         </Routes>
       </Provider>
     </>

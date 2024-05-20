@@ -13,6 +13,10 @@ import { applicationsReducer } from "./reducers/applicationsReducer";
 import { userFetchJobReducer } from "./reducers/userFetchJobReducer";
 import { getUserDetailsReducer } from "./reducers/getUserDetailsReducer";
 import { downloadReducer } from "./reducers/downloadReducer";
+import { paymentReducer } from "./reducers/payment";
+import { fetchDonorsReducer } from "./reducers/fetchdonors";
+import { fetchTotalAmountReducer } from "./reducers/totalAmount";
+import { updateUserDataReducer } from "./reducers/updateUserData";
 
 export const rootReducers = combineReducers({
   userData: userReducer,
@@ -29,4 +33,8 @@ export const rootReducers = combineReducers({
   userJobDetails: userFetchJobReducer,
   getUserDetails: getUserDetailsReducer,
   download: downloadReducer,
+  payment:paymentReducer,
+  fetchDonors: fetchDonorsReducer,
+  totalAmount: fetchTotalAmountReducer,
+  updateUserDetails: updateUserDataReducer
 });

@@ -1,0 +1,15 @@
+.logout .logout-btn{
+    color: var(--white);
+    background-color: #D32F2F;
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.logout .logout-btn:hover{
+    background-color: red;
+    font-family: var(--font-family);
+    font-size: 14px;
+}

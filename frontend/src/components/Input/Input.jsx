@@ -2,12 +2,12 @@ import React from 'react'
 import Alert from '../Alert/Alert'
 import './styles.css'
 
-const   Input = ({ type,id,placeholder,label,errors,name,HandleChange,value}) => {
+const   Input = ({ type,id,placeholder,label,errors,name,HandleChange,value,className}) => {
     return (
         <div className="form-group">
             <input
                 type={type}
-                className="form-control app_input"
+                className={`${className} form-control app_input`}
                 id={id}
                 placeholder={placeholder}
                 name={name}

@@ -50,7 +50,7 @@ const Login = () => {
                 }).then(res => {
                     dispatch({ type: USER.LOGIN_SUCCESS, payload: res.data });
                     if (res.data.isAdmin) {
-                        navigate('/admin-dashboard', { replace: true });
+                        navigate('/dashboard', { replace: true });
                     } else {
                         console.log('redirecting');
                         navigate('/', { replace: true })

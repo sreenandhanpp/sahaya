@@ -6,12 +6,24 @@
   transition: all 0.4s ease-in-out;
   margin-top: 20px;
 }
+/* styles.css */
+@font-face {
+  font-family: 'Rocher';
+  src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
+}
 
-.campaignDetails .donate-btn:hover {
-  border-radius: 5px;
-  width: 120px;
-  background-color: var(--primary-color--) !important;
-  color: var(--white) !important;
+.congratulations-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Rocher', sans-serif; /* Use Rocher font */
+  font-size: 50px; /* Adjust font size as needed */
+  color: #ff8c00; /* Set custom color */
+  background-color: transparent; /* Remove background color */
+  border: none; /* Remove border */
+  transition: opacity 0.5s ease; /* Add transition for opacity */
+  opacity: 1; /* Ensure initial opacity is 1 */
 }
 
 .campaignDetails .other-campaign-details{

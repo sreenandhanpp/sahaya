@@ -6,6 +6,10 @@ const Otp = require("../../MongoDb/models/userModels/mailOtp.js");
 const mongoose = require("mongoose");
 const Campaign = require("../../MongoDb/models/adminModels/campaign.js");
 const ObjectId = mongoose.Types.ObjectId;
+const Razorpay = require("razorpay");
+const Order = require("../../MongoDb/models/userModels/OrderSchema.js");
+const Donation = require("../../MongoDb/models/userModels/Donations.js");
+const deleteImage = require("../../utils/deleteImage.js");
 
 module.exports = {
   // Function to create a new user account
@@ -54,7 +58,8 @@ module.exports = {
       try {
         // Find a user with the provided email in the database
         const user = await User.findOne({ email: userData.email });
-
+        console.log(user);
+        console.log(userData);
         if (user) {
           // Compare the provided password with the hashed password in the database
           let status = await bcrypt.compare(userData.password, user.password);
@@ -62,6 +67,7 @@ module.exports = {
           if (status) {
             // If credentials are valid, create a data object with user information
             const data = {
+              id: user._id,
               fullname: user.fullname,
               email: user.email,
               admin: user.admin,
@@ -76,6 +82,7 @@ module.exports = {
           reject("Email id not found");
         }
       } catch (error) {
+        console.log(error);
         // Handle any unexpected errors during the sign-in process
         reject("Something went wrong on sign-in process");
       }
@@ -174,7 +181,7 @@ module.exports = {
       try {
         Campaign.find()
           .then((campaigns) => {
-            console.log(campaigns)
+            console.log(campaigns);
             resolve(campaigns);
           })
           .catch((err) => {
@@ -189,7 +196,7 @@ module.exports = {
   getCampagin: ({ id }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        Campaign.findOne({ _id: new ObjectId(id)})
+        Campaign.findOne({ _id: new ObjectId(id) })
           .then((campaign) => {
             resolve(campaign);
           })
@@ -198,6 +205,192 @@ module.exports = {
           });
       } catch (error) {
         reject("Something went wrong on fetching campaign");
+      }
+    });
+  },
+
+  // Function to create an order using Razorpay
+  createOrder: (amount) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Create a new instance of Razorpay with the provided API key and secret
+        const instance = new Razorpay({
+          key_id: process.env.RAZORPAY_KEY,
+          key_secret: process.env.RAZORPAY_SECRET,
+        });
+
+        // Specify the order options, including the amount and currency
+        const options = {
+          amount: amount,
+          currency: "INR",
+        };
+
+        // Create an order using the Razorpay instance and specified options
+        const order = await instance.orders.create(options);
+
+        // If the order is successfully created, resolve with the order details
+        if (!order) {
+          reject("Something went wrong");
+        } else {
+          const newOrder = new Order({
+            order_id: order.id,
+            amount: order.amount,
+            createdAt: order.created_at,
+          });
+
+          newOrder
+            .save(newOrder)
+            .then((resp) => {
+              resolve(order);
+            })
+            .catch((err) => {
+              console.log(err);
+              reject("Something went wrong");
+            });
+        }
+      } catch (error) {
+        console.log(error);
+        // Reject with an error message if there's an exception during the process
+        reject("Something went wrong");
+      }
+    });
+  },
+  saveDonation: ({
+    campaignId,
+    amount,
+    donorId,
+    paymentStatus,
+    razorpay_payment_id,
+    razorpay_order_id,
+  }) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Create a new Donation instance
+        const newDonation = new Donation({
+          campaign: campaignId,
+          amount: amount,
+          donor: donorId,
+          paymentStatus: paymentStatus,
+          razorpay_payment_id: razorpay_payment_id,
+          razorpay_order_id: razorpay_order_id,
+        });
+
+        // Save the new donation to the database
+        newDonation
+          .save(newDonation)
+          .then((donation) => {
+            resolve("Thank you for donating");
+          })
+          .catch((err) => {
+            console.log(err);
+            reject("Something went wrong while saving donation details");
+          });
+      } catch (error) {
+        console.log(error);
+        reject("Something went wrong while saving donation details");
+      }
+    });
+  },
+  fetchDonors: (campaignId) => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Find all donations whose campaignId matches the provided campaignId
+        Donation.find({ campaign: new ObjectId(campaignId) })
+          .populate({
+            path: "donor",
+            select: "fullname email createdAt amount", // Specify the fields you want to select from the user document
+          })
+          .then((donations) => {
+            // Extract user details from donations
+            const donors = donations.map((donation) => ({
+              donorId: donation.donor._id,
+              fullname: donation.donor.fullname,
+              email: donation.donor.email,
+              amount: donation.amount,
+              createdAt: donation.createdAt,
+            }));
+            resolve(donors);
+          })
+          .catch((err) => {
+            console.log(err);
+            reject("Error fetching donors by campaign: " + err);
+          });
+      } catch (error) {
+        console.log(error);
+        reject("Something went wrong");
+      }
+    });
+  },
+  calculateTotalAmountDonated: ({ campaignId }) => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Aggregate the total amount donated across all donations
+        Donation.aggregate([
+          {
+            $group: {
+              _id: new ObjectId(campaignId),
+              totalAmount: { $sum: "$amount" },
+            },
+          },
+        ])
+          .then((result) => {
+            // Extract total amount from result
+            const totalAmount = result.length > 0 ? result[0].totalAmount : 0;
+            resolve(totalAmount);
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(
+              "Something went wrong while calculating total amount donated"
+            );
+          });
+      } catch (error) {
+        console.error(error);
+        reject("Something went wrong while calculating total amount donated");
+      }
+    });
+  },
+  updateUserDetails: (userId, data, file) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Create a user object with updated data
+        let updatedUserData;
+
+        if (data) {
+          updatedUserData = {
+            fullname: data.fullName,
+            email: data.email,
+          };
+        }
+          console.log(file);
+        if (file) {
+          const currentProfile = await User.findOne({ _id: new ObjectId(userId) });
+          await deleteImage(currentProfile.profile);
+          updatedUserData.profile = file.filename;
+        }
+
+        // Update the user in the database
+        User.findOneAndUpdate(
+          { _id: new ObjectId(userId) },
+          { $set: updatedUserData },
+          { new: true }
+        )
+          .then((result) => {
+            if (result) {
+              result.password = null;
+              console.log(result)
+              resolve(result);
+            } else {
+              reject("User not found or no changes were made");
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            reject("Something went wrong while updating user details");
+          });
+      } catch (error) {
+        console.error(error);
+        reject("Something went wrong while updating user details");
       }
     });
   },
