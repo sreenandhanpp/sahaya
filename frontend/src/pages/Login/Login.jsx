@@ -49,7 +49,7 @@ const Login = () => {
                     password: formValues.password
                 }).then(res => {
                     dispatch({ type: USER.LOGIN_SUCCESS, payload: res.data });
-                    if (res.data.isAdmin) {
+                    if (res.data.admin) {
                         navigate('/dashboard', { replace: true });
                     } else {
                         console.log('redirecting');
