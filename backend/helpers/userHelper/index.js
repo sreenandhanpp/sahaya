@@ -1,5 +1,5 @@
 const User = require("../../MongoDb/models/userModels/User.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const generateOtp = require("../../utils/generateOtp.js");
 const Otp = require("../../MongoDb/models/userModels/mailOtp.js");

@@ -12,6 +12,9 @@ import CreateCampaign from './pages/Admin/CreateCampaign/CreateCampaign'
 import UpdateCampaign from './pages/Admin/UpdateCampaign/UpdateCampaign'
 import CampaignDetails from './components/CampaignDetails/CampaignDetails'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
+import UserRoute from './components/RouteProtecters/UserRoute'
+import AdminRoute from './components/RouteProtecters/AdminRoute'
+import HomeRoute from './components/RouteProtecters/HomeRoute'
 
 function App() {
 
@@ -20,12 +23,24 @@ function App() {
       <Provider store={store}>
         <Routes>
           {/* <Route exact path="/" element={<RequireAuth>  <Home /></RequireAuth>} /> */}
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path='/login' element={<UserRoute />} >
+        <Route path="/login" element={<Login/>} />
+        </Route>
           <Route exact path="/update-campaign/:id" element={<UpdateCampaign />} />
           <Route exact path="/create-campaign" element={<CreateCampaign />} />
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route exact path="/signup" element={<SignUp />} />
+         
+        <Route path="/dashboard" element={<AdminRoute/>} >
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        </Route>
+
+        
+        <Route exact path='/' element={<HomeRoute />} >
+        <Route path="/" element={<Home/>} />
+        </Route>
+
+          <Route exact path='/signup' element={<UserRoute />} >
+        <Route path="/signup" element={<SignUp/>} />
+        </Route>
           <Route exact path="/campaign-details/:id" element={<CampaignDetails />} />
           <Route exact path="/verify-email" element={<VerifyEmail />} />
           <Route exact path="/user/profile" element={<ProfilePage />} />

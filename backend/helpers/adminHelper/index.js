@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const User = require("../../MongoDb/models/userModels/User");
-const bcrypt = require("bcrypt");
 const Campaign = require("../../MongoDb/models/adminModels/campaign");
 
 module.exports = {

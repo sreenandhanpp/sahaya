@@ -2,3 +2,12 @@
     height: 70px;
     width: 400px;
 }
+
+.logout{
+    text-decoration: underline;
+}
+
+.logout:hover{
+    color: rgb(169, 15, 15) !important;
+
+}

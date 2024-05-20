@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import './style.css'
+import { getItem } from '../../../localStorage/getItem';
+import { removeItem } from '../../../localStorage/removeItem';
 const Navbar = () => {
+    const userData =  getItem('user')
     useEffect(() => {
         const nav = document.querySelector("nav");
         function handleScroll() {
@@ -18,6 +21,9 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+    const handleLogout = () =>{
+        removeItem('user')
+    }
     return (
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
             <div className="container">
@@ -37,20 +43,12 @@ const Navbar = () => {
                     <div className="mx-auto"></div>
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link text-white" href="#">Home</a>
+                            <a className="nav-link text-white" > {userData && userData?.fullname }</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-white" href="#">About</a>
+                            <a className="nav-link text-white logout" onClick={handleLogout}>#logout</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="#">Blog</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="#">Pricing</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="#">Contact</a>
-                        </li>
+                    
                     </ul>
                 </div>
             </div>

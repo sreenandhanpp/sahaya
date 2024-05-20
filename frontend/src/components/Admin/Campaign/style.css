@@ -1,9 +1,17 @@
+a{
+    text-decoration: none;
+}
+
 .edit-btn{
     width: 60px !important;
     background-color: var(--primary-color--)!important;
+    color: white !important;
 }
 
-.delete-btn{
+.btn-delete {
     width: 60px !important;
-    background-color: rgb(214, 13, 13) !important;
+}
+
+.fa-trash{
+    color: red !important;
 }
